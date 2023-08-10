@@ -14,7 +14,7 @@ const SavedBooks = () => {
     },
   });
 
-  const userData = data.me;
+  const userData = data?.me;
 
   const [removeBook] = useMutation(REMOVE_BOOK);
 
