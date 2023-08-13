@@ -49,7 +49,7 @@ const SearchCandles = () => {
         image: candle.volumeInfo.imageLinks?.thumbnail || "",
       }));
 
-      setSearchedCandles(candleDataData);
+      setSearchedCandles(candleData);
       setSearchInput("");
     } catch (err) {
       console.error(err);
@@ -71,12 +71,12 @@ const SearchCandles = () => {
     try {
       const response = await saveCandle({
         variables: {
-          candleId: candleIdToSave,
+          candleId: candleToSave,
         },
       });
 
       // if candle successfully saves to user's account, save candle id to state
-      setSavedCandleIds([...savedCandleIds, candleIdToSave.candleId]);
+      setSavedCandleIds([...savedCandleIds, candleToSave.candleId]);
     } catch (err) {
       console.error(err);
     }

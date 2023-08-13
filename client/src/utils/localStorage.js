@@ -7,7 +7,7 @@ export const getSavedCandleIds = () => {
 };
 
 export const saveCandleIds = (candleIdArr) => {
-  if (candleIdArrIdArr.length) {
+  if (candleIdArr.length) {
     localStorage.setItem('saved_candles', JSON.stringify(candleIdArr));
   } else {
     localStorage.removeItem('saved_candles');
