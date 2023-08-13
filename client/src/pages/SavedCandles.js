@@ -3,11 +3,11 @@ import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import { useQuery, useMutation } from "@apollo/client";
 
 import Auth from "../utils/auth";
-import { removeBookId } from "../utils/localStorage";
+import { removeCandleId } from "../utils/localStorage";
 import { GET_ME } from "../utils/queries";
-import { REMOVE_BOOK } from "../utils/mutations";
+import { REMOVE_CANDLE } from "../utils/mutations";
 
-const SavedBooks = () => {
+const SavedCandles = () => {
   const { data, loading, error } = useQuery(GET_ME, {
     onError: (err) => {
       console.log(err);
@@ -16,10 +16,10 @@ const SavedBooks = () => {
 
   const userData = data?.me;
 
-  const [removeBook] = useMutation(REMOVE_BOOK);
+  const [removeCandle] = useMutation(REMOVE_CANDLE);
 
-  // create function that accepts the book's mongo _id value as param and deletes the book from the database
-  const handleDeleteBook = async (bookId) => {
+  // create function that accepts the candle's mongo _id value as param and deletes the candle from the database
+  const handleDeleteCandle = async (candleId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
@@ -27,12 +27,12 @@ const SavedBooks = () => {
     }
 
     try {
-      const response = await removeBook({
-        variables: { bookId },
+      const response = await removeCandle({
+        variables: { candleId },
       });
 
-      // upon success, remove book's id from localStorage
-      removeBookId(bookId);
+      // upon success, remove candle's id from localStorage
+      removeCandleId(candleId);
     } catch (err) {
       console.error(err);
     }
@@ -47,38 +47,38 @@ const SavedBooks = () => {
     <>
       <div fluid className="text-light bg-dark p-5">
         <Container>
-          <h1>Viewing saved books!</h1>
+          <h1>Viewing saved candles!</h1>
         </Container>
       </div>
       <Container>
         <h2 className="pt-5">
-          {userData.savedBooks.length
-            ? `Viewing ${userData.savedBooks.length} saved ${
-                userData.savedBooks.length === 1 ? "book" : "books"
+          {userData.savedCandles.length
+            ? `Viewing ${userData.savedCandles.length} saved ${
+                userData.savedCandles.length === 1 ? "candle" : "candles"
               }:`
-            : "You have no saved books!"}
+            : "You have no saved candles!"}
         </h2>
         <Row>
-          {userData.savedBooks.map((book) => {
+          {userData.savedCandles.map((candle) => {
             return (
               <Col md="4">
-                <Card key={book.bookId} border="dark">
-                  {book.image ? (
+                <Card key={candle.candleId} border="dark">
+                  {candle.image ? (
                     <Card.Img
-                      src={book.image}
-                      alt={`The cover for ${book.title}`}
+                      src={candle.image}
+                      alt={`The cover for ${candle.title}`}
                       variant="top"
                     />
                   ) : null}
                   <Card.Body>
-                    <Card.Title>{book.title}</Card.Title>
-                    <p className="small">Authors: {book.authors}</p>
-                    <Card.Text>{book.description}</Card.Text>
+                    <Card.Title>{candle.title}</Card.Title>
+                    <p className="small">Authors: {candle.authors}</p>
+                    <Card.Text>{candle.description}</Card.Text>
                     <Button
                       className="btn-block btn-danger"
-                      onClick={() => handleDeleteBook(book.bookId)}
+                      onClick={() => handleDeleteCandle(candle.candleId)}
                     >
-                      Delete this Book!
+                      Delete this Candle!
                     </Button>
                   </Card.Body>
                 </Card>
@@ -91,4 +91,4 @@ const SavedBooks = () => {
   );
 };
 
-export default SavedBooks;
+export default SavedCandles;

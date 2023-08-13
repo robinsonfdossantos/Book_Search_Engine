@@ -26,37 +26,41 @@ export const ADD_USER = gql`
   }
 `;
 
-export const SAVE_BOOK = gql`
-  mutation saveBook($book: BookInput) {
-    saveBook(book: $book) {
+export const SAVE_CANDLE = gql`
+  mutation saveCandle($candle: CandleInput) {
+    saveCandle(candle: $candle) {
       _id
       username
       email
-      savedBooks {
-        authors
-        description
-        bookId
-        image
-        link
-        title
+      savedCandles {
+        candleId
+        candleTitle
+        candleSize
+        candleColor
+        candleScent
+        candlePrice
+        candleDescription
+        candleImage
       }
     }
   }
 `;
 
-export const REMOVE_BOOK = gql`
-  mutation RemoveBook($bookId: String) {
-    removeBook(bookId: $bookId) {
+export const REMOVE_CANDLE = gql`
+  mutation RemoveCandle($candleId: String) {
+    removeCandle(candleId: $candleId) {
       _id
       username
       email
-      savedBooks {
-        authors
-        description
-        bookId
-        image
-        link
-        title
+      savedCandles {
+        candleId
+        candleTitle
+        candleSize
+        candleColor
+        candleScent
+        candlePrice
+        candleDescription
+        candleImage
       }
     }
   }
